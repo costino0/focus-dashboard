@@ -2,9 +2,11 @@ const clock = document.querySelector('#clock')
 const greeting = document.querySelector('#greeting')
 
 const nameForm = document.querySelector('#name-form')
+
 const nameInput = document.querySelector('#name-input')
 
 let userName = localStorage.getItem('focus.userName') ?? ""
+nameInput.value = userName
 
 nameForm.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -13,6 +15,7 @@ nameForm.addEventListener('submit', (e) => {
     if (!name) return
 
     userName = name
+    nameInput.value = name
 
     localStorage.setItem('focus.userName', userName)
 
