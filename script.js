@@ -14,15 +14,34 @@ const focusForm = document.querySelector('#focus-form')
 const focusInput = document.querySelector('#focus-input')
 const focusDisplay = document.querySelector('#focus-display')
 const focusCompleted = document.querySelector('#focus-completed')
+const clearFocusBtn = document.querySelector('#clear-focus')
 
 const savedFocus = localStorage.getItem('focus-dailyFocus') ?? ""
 focusCompleted.disabled = !savedFocus
+clearFocusBtn.disabled = !savedFocus
 focusInput.value = savedFocus
 focusDisplay.textContent = savedFocus || "No focus set yet."
 
 const savedCompleted = localStorage.getItem('focus-completed') === "true"
 focusCompleted.checked = Boolean(savedFocus) && savedCompleted
 focusDisplay.classList.toggle('is-completed', focusCompleted.checked)
+
+// Listen for clear focus click
+clearFocusBtn.addEventListener('click', () => {
+    focusInput.value = ""
+    focusDisplay.textContent = "No focus set yet."
+    focusCompleted.checked = false
+    focusDisplay.classList.remove('is-completed')
+    focusCompleted.disabled = true
+    clearFocusBtn.disabled = true
+
+    localStorage.removeItem('focus-dailyFocus')
+    localStorage.removeItem('focus-completed')
+
+    focusInput.focus()
+
+    console.log(document.activeElement === focusInput)
+})
 
 // Listen for focus completed change event
 focusCompleted.addEventListener('change', () => {
@@ -39,6 +58,7 @@ focusForm.addEventListener('submit', (e) => {
     if (!focus) return
 
     focusCompleted.disabled = false
+    clearFocusBtn.disabled = false
     focusCompleted.checked = false
     focusDisplay.classList.remove('is-completed')
     focusDisplay.textContent = focus
