@@ -130,3 +130,13 @@ section {
 #focus-completed:disabled {
     opacity: 0.5;
 }
+
+/* Disabled Buttons */
+button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    background-color: #9ddbd0;
+}
